@@ -1,7 +1,7 @@
 package main
 
 import (
-	io "automaton/packages/io"
+	io "automaton/include/io"
 )
 
 func main() {
