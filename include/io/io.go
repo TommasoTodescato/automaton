@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// warning : this only works in unix-like for now
+// warning : this only works in posix for now
 func clearScreen() {
 	fmt.Print("\033[H\033[2J")
 }
@@ -23,5 +23,4 @@ func PrintField(field [][]bool) {
 		}
 		fmt.Println()
 	}
-	fmt.Println()
 }

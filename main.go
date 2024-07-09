@@ -1,8 +1,8 @@
 package main
 
 import (
-	conway "automaton/include/conway"
-	io "automaton/include/io"
+	"automaton/include/conway"
+	"automaton/include/io"
 	"time"
 )
 
@@ -16,10 +16,11 @@ func main() {
 
 	f[2][3] = true
 	f[3][4] = true
-
 	f[4][2] = true
 	f[4][3] = true
 	f[4][4] = true
+
+	f[5][5] = true
 
 	for i := 0; i < 100; i++ {
 		io.PrintField(f)
