@@ -2,28 +2,23 @@ package main
 
 import (
 	"automaton/include/conway"
+	"automaton/include/field"
 	"automaton/include/io"
 	"time"
 )
 
 func main() {
-	dy, dx := 20, 20
+	f := field.InitField(30, 30)
 
-	f := make([][]bool, dy)
-	for i := range f {
-		f[i] = make([]bool, dx)
+	screen := io.InitScreen()
+	if screen == nil {
+		return
 	}
+	defer screen.Fini()
 
-	f[2][3] = true
-	f[3][4] = true
-	f[4][2] = true
-	f[4][3] = true
-	f[4][4] = true
-	f[5][5] = true
-
-	for i := 0; i < 100; i++ {
-		time.Sleep(300 * time.Millisecond)
-		io.PrintField(f)
+	for i := 0; i < 70; i++ {
+		io.PrintField(screen, f)
 		conway.LifeGeneration(f)
+		time.Sleep(200 * time.Millisecond)
 	}
 }

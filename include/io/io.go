@@ -2,25 +2,34 @@ package io
 
 import (
 	"fmt"
+
+	"github.com/gdamore/tcell/v2"
 )
 
-// warning : this only works in posix for now
-func clearScreen() {
-	fmt.Print("\033[H\033[2J")
+func InitScreen() tcell.Screen {
+	screen, err := tcell.NewScreen()
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return nil
+	}
+	if err := screen.Init(); err != nil {
+		fmt.Printf("%v\n", err)
+		return nil
+	}
+	return screen
 }
 
-func PrintField(field [][]bool) {
-
-	clearScreen()
+func PrintField(screen tcell.Screen, field [][]bool) {
+	screen.Clear()
 
 	for y := 0; y < len(field); y++ {
 		for x := 0; x < len(field[y]); x++ {
+			c := '·'
 			if field[y][x] {
-				fmt.Print("■ ")
-			} else {
-				fmt.Print("· ")
+				c = '■'
 			}
+			screen.SetContent(x, y, c, nil, tcell.StyleDefault)
 		}
-		fmt.Println()
 	}
+	screen.Show()
 }
