@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	dy, dx := 30, 30
+	dy, dx := 20, 20
 
 	f := make([][]bool, dy)
 	for i := range f {
@@ -19,15 +19,11 @@ func main() {
 	f[4][2] = true
 	f[4][3] = true
 	f[4][4] = true
-
 	f[5][5] = true
 
 	for i := 0; i < 100; i++ {
+		time.Sleep(300 * time.Millisecond)
 		io.PrintField(f)
-
 		conway.LifeGeneration(f)
-		time.Sleep(500 * time.Millisecond)
-
-		io.PrintField(f)
 	}
 }
