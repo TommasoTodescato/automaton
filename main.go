@@ -5,6 +5,8 @@ import (
 	"automaton/include/field"
 	"automaton/include/io"
 	"time"
+
+	"github.com/gdamore/tcell/v2"
 )
 
 func main() {
@@ -16,9 +18,31 @@ func main() {
 	}
 	defer screen.Fini()
 
+	ticker := time.NewTicker(200 * time.Millisecond)
+	defer ticker.Stop()
+
+	quit := make(chan struct{})
+	go func() {
+		for {
+			if ev := screen.PollEvent(); ev != nil {
+				switch ev := ev.(type) {
+				case *tcell.EventKey:
+					if ev.Key() == tcell.KeyEscape || ev.Key() == tcell.KeyCtrlC {
+						close(quit)
+						return
+					}
+				}
+			}
+		}
+	}()
+
 	for i := 0; i < 70; i++ {
-		io.PrintField(screen, f)
-		conway.LifeGeneration(f)
-		time.Sleep(200 * time.Millisecond)
+		select {
+		case <-ticker.C:
+			conway.LifeGeneration(f)
+			io.PrintField(screen, f)
+		case <-quit:
+			return
+		}
 	}
 }
