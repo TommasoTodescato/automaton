@@ -27,7 +27,7 @@ func main() {
 			if ev := screen.PollEvent(); ev != nil {
 				switch ev := ev.(type) {
 				case *tcell.EventKey:
-					if ev.Key() == tcell.KeyEscape || ev.Key() == tcell.KeyCtrlC {
+					if ev.Key() == tcell.KeyEscape || ev.Key() == tcell.KeyCtrlC || ev.Rune() == 'q' {
 						close(quit)
 						return
 					}
