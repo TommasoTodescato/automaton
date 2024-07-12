@@ -1,18 +1,29 @@
 package main
 
 import (
-	"automaton/include/conway"
-	"automaton/include/field"
-	"automaton/include/io"
+	"automaton/engine/conway"
+	"automaton/tui"
 	"time"
 
 	"github.com/gdamore/tcell/v2"
 )
 
 func main() {
-	f := field.InitField(30, 30)
 
-	screen := io.InitScreen()
+	dy, dx := 30, 30
+
+	f := make([][]bool, dy)
+	for i := range f {
+		f[i] = make([]bool, dx)
+	}
+	f[2][3] = true
+	f[3][4] = true
+	f[4][2] = true
+	f[4][3] = true
+	f[4][4] = true
+	f[5][5] = true
+
+	screen := tui.InitScreen()
 	if screen == nil {
 		return
 	}
@@ -40,7 +51,7 @@ func main() {
 		select {
 		case <-ticker.C:
 			conway.LifeGeneration(f)
-			io.PrintField(screen, f)
+			tui.PrintField(screen, f)
 		case <-quit:
 			return
 		}

@@ -1,4 +1,4 @@
-package io
+package tui
 
 import (
 	"fmt"
